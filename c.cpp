@@ -1,13 +1,3 @@
-/*
-  Compete against Yourself.
-  Author - Aryan Choudhary (@aryanc403)
-*/
-
-#pragma GCC optimize ("Ofast")
-#pragma GCC target ("sse,sse2,sse3,ssse3,sse4,popcnt,abm,mmx,avx,tune=native")
-#pragma GCC optimize ("-ffloat-store")
-
-#include<iostream>
 #include<bits/stdc++.h>
 using namespace std;
 #define fo(i,n)   for(i=0;i<(n);++i)
@@ -27,17 +17,9 @@ typedef pair<lli,lli> ii;
 typedef vector<ii> vii;
 typedef vector<lli> vi;
 
-clock_t time_p=clock();
-void aryanc403()
-{
-#ifdef ARYANC403
-    time_p=clock()-time_p;
-    cerr<<"Time Taken : "<<(float)(time_p)/CLOCKS_PER_SEC<<"\n";
-#endif
-}
 
-#ifdef ARYANC403
-#include "/home/aryan/codes/PastCodes/header.h"
+#ifdef umang99m
+#include "/home/umang/.templates/header.h"
 #else
     #define dbg(args...)
 #endif
@@ -85,88 +67,94 @@ const lli mod = 1000000007L;
     vii libd;
     //priority_queue < ii , vector < ii > , CMP > pq;// min priority_queue .
 
-lli solve(const vi &a,lli d)
-{
-    vector<bool> visb(b,false);
-    lli scr=0;
-    for(auto &ans:a)
-    {
-        if(d<0)
-            break;
-        if(d<libd[ans].X)
-            continue;
-        
-            lli sc=(d-libd[ans].X)*libd[ans].Y;
-            const vi &cur=library[ans];
-            for(auto x:cur)
-            {
-                if(sc<=0)
-                    break;
-                if(visb[x])
-                    continue;
-                visb[x]=true;
-                scr+=bcost[x];
-            }
-        d-=libd[ans].X;
+    mytype po(mytype x, lli y){
+        mytype ans = 1;
+        fo(i,y){
+            ans *= x;
+        }
+        return ans;
     }
-    dbg(scr);
-    return scr;
-}
-
-void prt()
-{
-vector<bool> visb(b,false);
-    lli scr=0;
-    for(auto &ans:a)
-    {
-        if(d<0)
-            break;
-        if(d<libd[ans].X)
-            continue;
-        
-            lli sc=(d-libd[ans].X)*libd[ans].Y;
-            const vi &cur=library[ans];
-            for(auto x:cur)
-            {
-                if(sc<=0)
-                    break;
-                if(visb[x])
-                    continue;
-                visb[x]=true;
-                scr+=bcost[x];
-            }
-        d-=libd[ans].X;
-    }
-    dbg(scr);
-    return scr;
-}
-
 void run()
 {
     vi libcost;
     vector<bool> visl(l,false),visb(b,false);
 
-    vi a;
-    for(lli i=0;i<l;++i)
-        a.pb(i);
-    vi ans;
-    lli myscr=-1;
-    for(lli kk=0;kk<10000;++kk)
+    lli myscr=0;
+    cout<<l<<endl;
+    lli nl=0;
+    for(nl=0;nl<l;++nl)
     {
-        shuffle(all(a),rng);
-        lli cnt=solve(a,d);
-        // dbg(a);
-        if(cnt>myscr)
+        if(d<0)
+            break;
+        lli ans=-1;
+        mytype bstscr=-1, b1=-1, bestb1=-1;
+        for(lli i=0;i<l;++i)
         {
-            myscr=cnt;
-            ans=a;
+            if(visl[i]||d<=libd[i].X)
+                continue;
+            lli cnt=0,sc=(d-libd[i].X)*libd[i].Y;
+            const vi &cur=library[i];
+            for(auto x:cur)
+            {
+                if(sc<=0)
+                    break;
+                if(visb[x])
+                    continue;
+                cnt+=bcost[x];
+                sc--;
+            }
+            mytype mycnt = cnt, mylibd = libd[i].X;
+
+            b1 = po(mycnt,161)/po(mylibd,160);
+            if(b1 > bestb1)
+            {
+                ans=i;
+                bestb1 = b1;
+            }
         }
+
+        if(ans==-1)
+            break;
+
+            vi prt;
+            lli sc=(d-libd[ans].X)*libd[ans].Y;
+            const vi &cur=library[ans];
+            for(auto x:cur)
+            {
+                if(sc<=0)
+                    break;
+                if(visb[x])
+                    continue;
+                sc--;
+                prt.pb(x);
+                visb[x]=true;
+            }
+        //dbg(libd[ans]);
+        visl[ans]=true;
+        if(prt.empty())
+            prt.pb(cur[0]);
+        assert(!prt.empty());
+        cout<<ans<<" "<<sz(prt)<<endl;
+        for(auto x:prt){
+         cout<<x<<" ";
+         myscr += bcost[x];
+        }
+        cout<<endl;
+        d-=libd[ans].X;
+    }
+
+    dbg("lib signup",nl);
+    // cout<<"Hello"<<endl;
+    for(lli i=0;i<l;++i)
+    {
+        if(visl[i])
+            continue;
+        cout<<i<<" "<<1<<endl;
+        cout<<library[i][0]<<endl;
     }
 
     cerr<<"MY SCORE "<<myscr/1000000.0<<endl;
-    prt();
-
-    // assert(false);    
+    // assert(false);
 }
 
 int main(void) {
@@ -202,6 +190,7 @@ int main(void) {
     }
 
     run();
-}   aryanc403();
+}
     return 0;
 }
+

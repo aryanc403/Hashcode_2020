@@ -18,8 +18,8 @@ typedef vector<ii> vii;
 typedef vector<lli> vi;
 
 
-#ifdef umang99m
-#include "/home/umang/.templates/header.h"
+#ifdef ARYANC403
+#include "/home/aryan/codes/PastCodes/header.h"
 #else
     #define dbg(args...)
 #endif
@@ -105,7 +105,7 @@ void run()
             }
             mytype mycnt = cnt, mylibd = libd[i].X;
 
-            b1 = po(mycnt,7)/po(mylibd,4);
+            b1 = po(mycnt,688)/po(mylibd,599);
             if(b1 > bestb1)
             {
                 ans=i;
@@ -129,7 +129,7 @@ void run()
                 prt.pb(x);
                 visb[x]=true;
             }
-        dbg(libd[ans]);
+        //dbg(libd[ans]);
         visl[ans]=true;
         if(prt.empty())
             prt.pb(cur[0]);
