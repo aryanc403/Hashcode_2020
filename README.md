@@ -1,5 +1,6 @@
 # Hash Code 2020
 Team Name - EliteHashers
+
 Members - Aryan Choudhary, Lavish Gupta, Umang Malik, Utkarsh Gupta
 
 Global Rank 184, India Rank - 3
